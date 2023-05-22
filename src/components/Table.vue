@@ -1,7 +1,7 @@
 <template>
   <div class="table">
     <div class="header">
-      <div class="column">Имя</div>
+      <div class="column" @click="$emit('sort')">Имя</div>
       <div class="column">Телефон</div>
     </div>
     <div class="items">

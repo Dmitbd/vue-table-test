@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <button class="add-button" @click="openModal">Добавить</button>
-    <Table :tableData="tableData" />
+    <Table :tableData="tableData" @sort="sortTableData" />
     <Modal v-if="isOpenModal" :tableData="tableData" @addTableItem="addTableItem" @close="closeModal" />
   </div>
 </template>
@@ -30,7 +30,20 @@ export default {
     },
     addTableItem(newItem) {
       this.tableData.push(newItem)
-    }
+    },
+    sortTableData() {
+      const recursiveSort = (data) => {
+        data.sort((a, b) => a.name.localeCompare(b.name));
+
+        data.forEach((item) => {
+          if (item.nestedItems && item.nestedItems.length > 0) {
+            recursiveSort(item.nestedItems);
+          }
+        });
+      };
+
+      recursiveSort(this.tableData);
+    },
   }
 }
 </script>
