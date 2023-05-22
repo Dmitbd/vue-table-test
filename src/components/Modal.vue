@@ -3,11 +3,11 @@
     <div class="modal">
       <div class="input-container">
         <p class="input-text">Имя</p>
-        <input class="input" v-model="name">
+        <TextInput v-model="name"></TextInput>
       </div>
       <div class="input-container">
         <p class="input-text">Телефон</p>
-        <input class="input" v-model="phone">
+        <PhoneInput v-model="phone"></PhoneInput>
       </div>
       <div class="input-container">
         <p class="input-text">Начальник</p>
@@ -23,6 +23,10 @@
 </template>
 
 <script>
+import TextInput from './TextInput.vue'
+import HponeInput from './PhoneInput.vue'
+import PhoneInput from './PhoneInput.vue'
+
 export default {
   data() {
     return {
@@ -30,6 +34,11 @@ export default {
       phone: '',
       selectedItem: ''
     }
+  },
+  components: {
+    TextInput,
+    HponeInput,
+    PhoneInput
   },
   props: {
     tableData: {
@@ -42,7 +51,7 @@ export default {
       const newItem = {
         id: Math.random().toString(),
         name: this.name,
-        phone: this.phone,
+        phone: this.phone, // Используйте значение this.phone, полученное через v-model
         nestedItems: []
       }
 
