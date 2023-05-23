@@ -13,21 +13,21 @@ export default {
     }
   },
   computed: {
-    buttonClasses() {
+    buttonClasses () {
       return {
         'save-button': true,
         'disabled-button': this.isDisabled,
         'active-button': !this.isDisabled
-      };
+      }
     },
-    isDisabled() {
-      return this.disabled;
+    isDisabled () {
+      return this.disabled
     }
   },
   methods: {
-    handleClick() {
+    handleClick () {
       if (!this.isDisabled) {
-        this.$emit('click');
+        this.$emit('click')
       }
     }
   }
@@ -58,4 +58,3 @@ export default {
   cursor: not-allowed;
 }
 </style>
-

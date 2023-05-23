@@ -4,21 +4,21 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       formattedName: ''
-    };
+    }
   },
   methods: {
-    formatInput() {
+    formatInput () {
       // делает первый символ заглавным, остальные строчными
       const formatted = this.formattedName.charAt(0).toUpperCase() +
-        this.formattedName.slice(1).toLowerCase();
-      this.formattedName = formatted.replace(/[^a-zA-Zа-яА-ЯёЁ]/g, '');
-      this.$emit('input', this.formattedName);
+        this.formattedName.slice(1).toLowerCase()
+      this.formattedName = formatted.replace(/[^a-zA-Zа-яА-ЯёЁ]/g, '')
+      this.$emit('input', this.formattedName)
     }
   }
-};
+}
 </script>
 
 <style scoped>

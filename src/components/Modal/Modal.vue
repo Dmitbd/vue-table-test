@@ -1,16 +1,19 @@
 <template>
   <div class="back">
     <div class="modal">
+
       <div class="input-container">
         <p class="input-text">Имя</p>
         <TextInput v-model="name" @input="handleNameInput"></TextInput>
         <ErrorMessage :has-error="isNameInvalid" error-message="Мин. длина 2 символа"></ErrorMessage>
       </div>
+
       <div class="input-container">
         <p class="input-text">Телефон</p>
         <PhoneInput v-model="phone" @input="handlePhoneInput"></PhoneInput>
         <ErrorMessage :has-error="isPhoneInvalid" error-message="Мин. длина 11 символов"></ErrorMessage>
       </div>
+
       <div class="input-container">
         <p class="input-text">Начальник</p>
         <select class="select" v-model="selectedItem">
@@ -18,7 +21,9 @@
           <option v-for="item in tableData" :key="item.id" :value="item.id">{{ item.name }}</option>
         </select>
       </div>
+
       <SaveButton :disabled="isSaveButtonDisabled || isFieldsEmpty" @click="saveData">Сохранить</SaveButton>
+      
       <button class="close-button" @click="closeModal">x</button>
     </div>
   </div>
@@ -31,7 +36,7 @@ import ErrorMessage from '../common/ErrorMessage.vue'
 import SaveButton from '../common/SaveButton.vue'
 
 export default {
-  data() {
+  data () {
     return {
       name: '',
       phone: '',
@@ -53,21 +58,21 @@ export default {
     }
   },
   computed: {
-    isPhoneInvalid() {
-      return this.isPhoneInputStarted && this.phone.length < 16;
+    isPhoneInvalid () {
+      return this.isPhoneInputStarted && this.phone.length < 16
     },
-    isNameInvalid() {
-      return this.isNameInputStarted && this.name.length < 2;
+    isNameInvalid () {
+      return this.isNameInputStarted && this.name.length < 2
     },
-    isSaveButtonDisabled() {
-      return this.isPhoneInvalid || this.isNameInvalid;
+    isSaveButtonDisabled () {
+      return this.isPhoneInvalid || this.isNameInvalid
     },
-    isFieldsEmpty() {
-      return this.name.length === 0 || this.phone.length === 0;
+    isFieldsEmpty () {
+      return this.name.length === 0 || this.phone.length === 0
     }
   },
   methods: {
-    saveData() {
+    saveData () {
       const newItem = {
         id: Math.random().toString(),
         name: this.name,
@@ -76,23 +81,23 @@ export default {
       }
 
       if (this.selectedItem) {
-        const selectedItem = this.tableData.find(item => item.id === this.selectedItem);
+        const selectedItem = this.tableData.find(item => item.id === this.selectedItem)
         if (selectedItem) {
-          selectedItem.nestedItems.push(newItem);
+          selectedItem.nestedItems.push(newItem)
         }
       } else {
-        this.tableData.push(newItem);
+        this.tableData.push(newItem)
       }
-      this.closeModal();
+      this.closeModal()
     },
-    closeModal() {
-      this.$emit('close');
+    closeModal () {
+      this.$emit('close')
     },
-    handlePhoneInput() {
-      this.isPhoneInputStarted = true;
+    handlePhoneInput () {
+      this.isPhoneInputStarted = true
     },
-    handleNameInput() {
-      this.isNameInputStarted = true;
+    handleNameInput () {
+      this.isNameInputStarted = true
     }
   }
 }
@@ -161,6 +166,3 @@ select:focus {
   background-color: #e53935;
 }
 </style>
-
-
-

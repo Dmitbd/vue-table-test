@@ -7,65 +7,66 @@
 </template>
 
 <script>
-import Table from "@/components/Table/Table.vue";
-import Modal from "@/components/Modal/Modal.vue";
+import Table from '@/components/Table/Table.vue'
+import Modal from '@/components/Modal/Modal.vue'
+
+import { saveData, loadData } from '@/components/utils/localStorage'
 
 export default {
-  data() {
+  data () {
     return {
       isOpenModal: false,
-      tableData: [],
-    };
+      tableData: []
+    }
   },
   components: {
     Table,
-    Modal,
+    Modal
   },
-  created() {
+  created () {
     // Загрузка данных из localStorage при создании компонента
-    this.loadTableData();
+    this.loadTableData()
   },
   watch: {
     tableData: {
-      handler(newData) {
+      handler (newData) {
         // Сохранение данных в localStorage при изменении tableData
-        this.saveTableData(newData);
+        this.saveTableData(newData)
       },
-      deep: true,
-    },
+      deep: true
+    }
   },
   methods: {
-    openModal() {
-      this.isOpenModal = true;
+    openModal () {
+      this.isOpenModal = true
     },
-    closeModal() {
-      this.isOpenModal = false;
+    closeModal () {
+      this.isOpenModal = false
     },
-    addTableItem(newItem) {
-      this.tableData.push(newItem);
+    addTableItem (newItem) {
+      this.tableData.push(newItem)
     },
-    sortTableData() {
+    sortTableData () {
       const recursiveSort = (data) => {
-        data.sort((a, b) => a.name.localeCompare(b.name));
+        data.sort((a, b) => a.name.localeCompare(b.name))
 
         data.forEach((item) => {
           if (item.nestedItems && item.nestedItems.length > 0) {
-            recursiveSort(item.nestedItems);
+            recursiveSort(item.nestedItems)
           }
-        });
-      };
+        })
+      }
 
-      recursiveSort(this.tableData);
+      recursiveSort(this.tableData)
     },
-    saveTableData(data) {
-      localStorage.setItem("tableData", JSON.stringify(data));
+    saveTableData () {
+      saveData('tableData', this.tableData)
     },
-    loadTableData() {
-      const storedTableData = localStorage.getItem("tableData");
-      this.tableData = storedTableData ? JSON.parse(storedTableData) : [];
-    },
-  },
-};
+    loadTableData () {
+      this.tableData = loadData('tableData', [])
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -93,4 +94,3 @@ export default {
   background-color: rgba(51, 146, 254, 0.876);
 }
 </style>
-

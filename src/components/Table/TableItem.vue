@@ -4,16 +4,18 @@
       <div class="column">{{ item.name }}</div>
       <div class="column">{{ item.phone }}</div>
     </div>
+
     <div v-if="item.nestedItems && item.nestedItems.length > 0">
       <div class="nested-items">
         <ChildrenTableItem v-for="nestedItem in item.nestedItems" :key="nestedItem.id" :item="nestedItem" />
       </div>
     </div>
+    
   </div>
 </template>
 
 <script>
-import ChildrenTableItem from './ChildrenTableItem.vue';
+import ChildrenTableItem from './ChildrenTableItem.vue'
 
 export default {
   name: 'TableItem',
@@ -26,7 +28,7 @@ export default {
   components: {
     ChildrenTableItem
   }
-};
+}
 </script>
 
 <style scoped>
@@ -44,6 +46,3 @@ export default {
   margin-left: 20px;
 }
 </style>
-
-
-
