@@ -3,11 +3,13 @@
     <div class="modal">
       <div class="input-container">
         <p class="input-text">Имя</p>
-        <TextInput v-model="name"></TextInput>
+        <TextInput v-model="name" @input="handleNameInput"></TextInput>
+        <ErrorMessage :has-error="isNameInvalid" error-message="Мин. длина 2 символа"></ErrorMessage>
       </div>
       <div class="input-container">
         <p class="input-text">Телефон</p>
-        <PhoneInput v-model="phone"></PhoneInput>
+        <PhoneInput v-model="phone" @input="handlePhoneInput"></PhoneInput>
+        <ErrorMessage :has-error="isPhoneInvalid" error-message="Мин. длина 11 символов"></ErrorMessage>
       </div>
       <div class="input-container">
         <p class="input-text">Начальник</p>
@@ -16,7 +18,7 @@
           <option v-for="item in tableData" :key="item.id" :value="item.id">{{ item.name }}</option>
         </select>
       </div>
-      <button class="save-button" @click="saveData">Сохранить</button>
+      <SaveButton :disabled="isSaveButtonDisabled || isFieldsEmpty" @click="saveData">Сохранить</SaveButton>
       <button class="close-button" @click="closeModal">x</button>
     </div>
   </div>
@@ -24,21 +26,25 @@
 
 <script>
 import TextInput from './TextInput.vue'
-import HponeInput from './PhoneInput.vue'
 import PhoneInput from './PhoneInput.vue'
+import ErrorMessage from './ErrorMessage.vue'
+import SaveButton from './SaveButton.vue'
 
 export default {
   data() {
     return {
       name: '',
       phone: '',
-      selectedItem: ''
+      selectedItem: '',
+      isNameInputStarted: false,
+      isPhoneInputStarted: false
     }
   },
   components: {
     TextInput,
-    HponeInput,
-    PhoneInput
+    PhoneInput,
+    ErrorMessage,
+    SaveButton
   },
   props: {
     tableData: {
@@ -46,12 +52,26 @@ export default {
       default: () => []
     }
   },
+  computed: {
+    isPhoneInvalid() {
+      return this.isPhoneInputStarted && this.phone.length < 16;
+    },
+    isNameInvalid() {
+      return this.isNameInputStarted && this.name.length < 2;
+    },
+    isSaveButtonDisabled() {
+      return this.isPhoneInvalid || this.isNameInvalid;
+    },
+    isFieldsEmpty() {
+      return this.name.length === 0 || this.phone.length === 0;
+    }
+  },
   methods: {
     saveData() {
       const newItem = {
         id: Math.random().toString(),
         name: this.name,
-        phone: this.phone, // Используйте значение this.phone, полученное через v-model
+        phone: this.phone,
         nestedItems: []
       }
 
@@ -67,6 +87,12 @@ export default {
     },
     closeModal() {
       this.$emit('close');
+    },
+    handlePhoneInput() {
+      this.isPhoneInputStarted = true;
+    },
+    handleNameInput() {
+      this.isNameInputStarted = true;
     }
   }
 }
@@ -95,6 +121,7 @@ export default {
 }
 
 .input-container {
+  position: relative;
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
@@ -105,15 +132,6 @@ export default {
   margin: 0;
 }
 
-.input {
-  border-radius: 6px;
-  border: 1px solid #2589FF;
-}
-
-input:focus {
-  outline: none;
-}
-
 .select {
   width: 167px;
   border-radius: 6px;
@@ -122,24 +140,6 @@ input:focus {
 
 select:focus {
   outline: none;
-}
-
-.save-button {
-  padding: 10px 20px;
-  width: 123px;
-  height: 40px;
-  background-color: #2589FF;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin: 20px auto 0 auto;
-}
-
-.save-button:hover {
-  background-color: rgba(51, 146, 254, 0.876);
 }
 
 .close-button {

@@ -11,6 +11,7 @@ export default {
   },
   methods: {
     formatInput() {
+      // делает первый символ заглавным, остальные строчными
       const formatted = this.formattedName.charAt(0).toUpperCase() +
         this.formattedName.slice(1).toLowerCase();
       this.formattedName = formatted.replace(/[^a-zA-Zа-яА-ЯёЁ]/g, '');
@@ -24,5 +25,9 @@ export default {
 .input {
   border-radius: 6px;
   border: 1px solid #2589FF;
+}
+
+input:focus {
+  outline: none;
 }
 </style>
