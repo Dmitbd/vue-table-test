@@ -7,19 +7,19 @@
 </template>
 
 <script>
-import Table from './components/Table.vue'
-import Modal from './components/Modal.vue'
+import Table from "@/components/Table/Table.vue";
+import Modal from "@/components/Modal/Modal.vue";
 
 export default {
   data() {
     return {
       isOpenModal: false,
-      tableData: []
-    }
+      tableData: [],
+    };
   },
   components: {
+    Table,
     Modal,
-    Table
   },
   created() {
     // Загрузка данных из localStorage при создании компонента
@@ -31,15 +31,15 @@ export default {
         // Сохранение данных в localStorage при изменении tableData
         this.saveTableData(newData);
       },
-      deep: true
-    }
+      deep: true,
+    },
   },
   methods: {
     openModal() {
-      this.isOpenModal = true
+      this.isOpenModal = true;
     },
     closeModal() {
-      this.isOpenModal = false
+      this.isOpenModal = false;
     },
     addTableItem(newItem) {
       this.tableData.push(newItem);
@@ -58,17 +58,15 @@ export default {
       recursiveSort(this.tableData);
     },
     saveTableData(data) {
-      localStorage.setItem('tableData', JSON.stringify(data));
+      localStorage.setItem("tableData", JSON.stringify(data));
     },
     loadTableData() {
-      const storedTableData = localStorage.getItem('tableData');
+      const storedTableData = localStorage.getItem("tableData");
       this.tableData = storedTableData ? JSON.parse(storedTableData) : [];
-    }
-  }
-}
+    },
+  },
+};
 </script>
-
-
 
 <style scoped>
 .container {

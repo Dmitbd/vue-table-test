@@ -25,10 +25,10 @@
 </template>
 
 <script>
-import TextInput from './TextInput.vue'
-import PhoneInput from './PhoneInput.vue'
-import ErrorMessage from './ErrorMessage.vue'
-import SaveButton from './SaveButton.vue'
+import TextInput from '../common/TextInput.vue'
+import PhoneInput from '../common/PhoneInput.vue'
+import ErrorMessage from '../common/ErrorMessage.vue'
+import SaveButton from '../common/SaveButton.vue'
 
 export default {
   data() {
