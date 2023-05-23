@@ -21,6 +21,19 @@ export default {
     Modal,
     Table
   },
+  created() {
+    // Загрузка данных из localStorage при создании компонента
+    this.loadTableData();
+  },
+  watch: {
+    tableData: {
+      handler(newData) {
+        // Сохранение данных в localStorage при изменении tableData
+        this.saveTableData(newData);
+      },
+      deep: true
+    }
+  },
   methods: {
     openModal() {
       this.isOpenModal = true
@@ -29,7 +42,7 @@ export default {
       this.isOpenModal = false
     },
     addTableItem(newItem) {
-      this.tableData.push(newItem)
+      this.tableData.push(newItem);
     },
     sortTableData() {
       const recursiveSort = (data) => {
@@ -44,9 +57,18 @@ export default {
 
       recursiveSort(this.tableData);
     },
+    saveTableData(data) {
+      localStorage.setItem('tableData', JSON.stringify(data));
+    },
+    loadTableData() {
+      const storedTableData = localStorage.getItem('tableData');
+      this.tableData = storedTableData ? JSON.parse(storedTableData) : [];
+    }
   }
 }
 </script>
+
+
 
 <style scoped>
 .container {
