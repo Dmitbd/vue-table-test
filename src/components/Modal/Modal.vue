@@ -23,7 +23,6 @@
       </div>
 
       <SaveButton :disabled="isSaveButtonDisabled || isFieldsEmpty" @click="saveData">Сохранить</SaveButton>
-      
       <button class="close-button" @click="closeModal">x</button>
     </div>
   </div>

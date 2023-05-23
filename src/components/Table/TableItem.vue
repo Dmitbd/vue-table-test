@@ -10,7 +10,6 @@
         <ChildrenTableItem v-for="nestedItem in item.nestedItems" :key="nestedItem.id" :item="nestedItem" />
       </div>
     </div>
-    
   </div>
 </template>
 

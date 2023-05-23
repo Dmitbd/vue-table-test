@@ -9,7 +9,6 @@
     <div class="items">
       <TableItem v-for="item in tableData" :key="item.id" :item="item" />
     </div>
-    
   </div>
 </template>
 
